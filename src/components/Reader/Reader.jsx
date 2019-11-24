@@ -1,4 +1,3 @@
-/* eslint-disable react/state-in-constructor */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import styles from './Reader.module.css';
@@ -7,6 +6,10 @@ import Counter from '../Counter/Counter';
 import Publication from '../Publication/Publication';
 
 class Reader extends Component {
+  componentDidMount = () => {
+    console.log(this.props);
+  };
+
   state = {
     articleIndex: 0,
   };
