@@ -2,6 +2,7 @@ import React from 'react';
 import Reader from './Reader/Reader';
 import publications from './Reader/publications';
 import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
+import queryString from 'query-string';
 
 const App = () => (
   <BrowserRouter>
@@ -9,9 +10,12 @@ const App = () => (
       <Route
         path="/reader"
         exact
-        render={props =>
-          props.location.search ? (
-            <Reader {...props} items={publications} />
+        render={props => {
+          const queryParams = queryString.parse(props.location.search);
+          const item = Number(queryParams.item);
+
+          return item > 0 && item <= publications.length ? (
+            <Reader {...props} item={item} items={publications} />
           ) : (
             <Redirect
               to={{
@@ -19,8 +23,8 @@ const App = () => (
                 search: '?item=1',
               }}
             />
-          )
-        }
+          );
+        }}
       />
 
       <Redirect

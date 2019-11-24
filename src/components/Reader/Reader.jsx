@@ -6,30 +6,22 @@ import Counter from '../Counter/Counter';
 import Publication from '../Publication/Publication';
 
 class Reader extends Component {
-  componentDidMount = () => {
-    console.log(this.props);
-  };
-
-  state = {
-    articleIndex: 0,
-  };
-
   handleClick = ({ target }) => {
     const { dataset } = target;
-    this.setState(prevState => ({
-      articleIndex:
-        dataset.name === 'next'
-          ? prevState.articleIndex + 1
-          : prevState.articleIndex - 1,
-    }));
+    const { item } = this.props;
+
+    this.props.history.push({
+      pathname: this.props.location.pathname,
+      search: `?item=${dataset.name === 'next' ? item + 1 : item - 1}`,
+    });
   };
 
   render() {
-    const { items } = this.props;
+    const { items, item } = this.props;
     const { reader } = styles;
-    const { articleIndex } = this.state;
+    const articleIndex = item - 1;
     const targetArticle = items[articleIndex];
-    const pageNumber = articleIndex + 1;
+
     return (
       <div className={reader}>
         <Controls
@@ -37,8 +29,8 @@ class Reader extends Component {
           disabledNext={articleIndex === items.length - 1}
           handleClick={this.handleClick}
         />
-        <Counter article={pageNumber} allArticles={items.length} />
-        <Publication pageNumber={pageNumber} article={targetArticle} />
+        <Counter article={item} allArticles={items.length} />
+        <Publication pageNumber={item} article={targetArticle} />
       </div>
     );
   }
