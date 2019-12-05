@@ -1,11 +1,11 @@
 import React from 'react';
 import Reader from './Reader/Reader';
 import publications from './Reader/publications';
-import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
+import { HashRouter, Switch, Route, Redirect } from 'react-router-dom';
 import queryString from 'query-string';
 
 const App = () => (
-  <BrowserRouter>
+  <HashRouter basename="/">
     <Switch>
       <Route
         path="/reader"
@@ -34,7 +34,7 @@ const App = () => (
         }}
       />
     </Switch>
-  </BrowserRouter>
+  </HashRouter>
 );
 
 export default App;
